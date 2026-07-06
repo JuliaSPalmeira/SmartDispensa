@@ -14,6 +14,15 @@
   - Exposed HTTP endpoints for data retrieval (`@GetMapping` with `.findAll()`) and payload processing (`@PostMapping` with `@RequestBody` and `.save()`).
   - Configured `application.properties` to expose the interactive H2 Web Console (`/h2-console`) and validated automatic schema generation.
   - Successfully simulated a frontend client utilizing Postman to dispatch raw JSON payloads, persisting the first live record into the database with a status code of `200 OK`.
+### 🚀 API Endpoints (CRUD)
+
+The project now supports full CRUD operations for product management:
+
+*   **`GET /products`**: Lists all products currently in the pantry.
+*   **`POST /products`**: Registers a new product.
+*   **`GET /products/{id}`**: Finds a specific product by its ID (Returns `200 OK` or `404 Not Found`).
+*   **`PUT /products/{id}`**: Updates details or quantities of an existing product.
+*   **`DELETE /products/{id}`**: Removes a product from the pantry (Returns `204 No Content`).
 
 **🔧 Tech Stack Applied**
 - Java 21+
