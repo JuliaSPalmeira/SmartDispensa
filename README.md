@@ -16,7 +16,7 @@
   - Successfully simulated a frontend client utilizing Postman to dispatch raw JSON payloads, persisting the first live record into the database with a status code of `200 OK`.
 
 **🔧 Tech Stack Applied**
-- Java 17+
+- Java 21+
 - Spring Boot
 - Spring Data JPA
 - H2 Database
