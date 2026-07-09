@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
@@ -12,10 +13,15 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank
     private String name;
+    @NotBlank
     private String brand;
+    @FutureOrPresent
     private LocalDate expirationDate;
+    @NotBlank
     private String category;
+    @PositiveOrZero
     private Integer quantity;
 
     public Product() {
