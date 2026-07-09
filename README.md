@@ -14,6 +14,8 @@
   - Exposed HTTP endpoints for data retrieval (`@GetMapping` with `.findAll()`) and payload processing (`@PostMapping` with `@RequestBody` and `.save()`).
   - Configured `application.properties` to expose the interactive H2 Web Console (`/h2-console`) and validated automatic schema generation.
   - Successfully simulated a frontend client utilizing Postman to dispatch raw JSON payloads, persisting the first live record into the database with a status code of `200 OK`.
+
+    Day 6: Domain Validation, Clean Code & DTO Architecture (Today! 🚀)Data Validation Gates: Integrated spring-boot-starter-validation to shield the database against corrupt or impossible payloads. Applied constraints directly onto the Product entity (@NotBlank, @PositiveOrZero, @FutureOrPresent).Endpoint Protection: Reinforced POST and PUT endpoints inside ProductController using the trigger annotation @Valid, successfully intercepting invalid client inputs and returning standardized 400 Bad Request HTTP status codes.Code Refactoring & Internationalization: Cleaned up legacy mixed-language variables (produtoExistente, novosDados) into standard enterprise English (currentProduct, newDetails) using safe IDE refactoring tools (Shift + F6).DTO Design Pattern: Created a decoupled dto package and designed the ValidationErrorDTO blueprint with explicit constructor variants and custom getters, preparing the architecture for specialized API exception handling.
 ### 🚀 API Endpoints (CRUD)
 
 The project now supports full CRUD operations for product management:
