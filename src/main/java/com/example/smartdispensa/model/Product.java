@@ -23,6 +23,8 @@ public class Product {
     private String category;
     @PositiveOrZero
     private Integer quantity;
+    @PositiveOrZero
+    private Integer minimumQuantity;
 
     public Product() {
     }
@@ -81,5 +83,13 @@ public class Product {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Integer getMinimumQuantity() {
+        return minimumQuantity;
+    }
+
+    public void setMinimumQuantity(Integer minimumQuantity) {
+        this.minimumQuantity = minimumQuantity;
     }
 }

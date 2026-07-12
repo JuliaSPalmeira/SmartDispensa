@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -19,7 +20,7 @@ public class ProductController {
         return productRepository.findAll();
     }
     @PostMapping
-    public Product salvar(@RequestBody @Valid Product product){
+    public Product save(@RequestBody @Valid Product product){
         return productRepository.save(product);
     }
     @GetMapping("/{id}")
@@ -36,6 +37,7 @@ public class ProductController {
             currentProduct.setExpirationDate(newDetails.getExpirationDate());
             currentProduct.setCategory(newDetails.getCategory());
             currentProduct.setQuantity(newDetails.getQuantity());
+            currentProduct.setMinimumQuantity(newDetails.getMinimumQuantity());
 
             Product updatedProduct = productRepository.save(currentProduct);
             return ResponseEntity.ok(updatedProduct);
@@ -47,6 +49,15 @@ public class ProductController {
             productRepository.delete(product);
             return ResponseEntity.noContent().<Void>build();
         }).orElse(ResponseEntity.notFound().build());
+    }
+    @GetMapping("/alerts/low-stock")
+    public List<Product> listLowStock(@RequestParam Integer limit) {
+        return productRepository.findByQuantityLessThanEqual(limit);
+    }
+    @GetMapping("/alerts/expiration")
+    public List<Product> listExpirationAlerts(@RequestParam String date) {
+        LocalDate cutoffDate = LocalDate.parse(date);
+        return productRepository.findByExpirationDateLessThanEqual(cutoffDate);
     }
 }
 
