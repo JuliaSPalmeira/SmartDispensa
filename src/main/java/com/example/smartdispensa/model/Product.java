@@ -1,9 +1,6 @@
 package com.example.smartdispensa.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
@@ -25,6 +22,9 @@ public class Product {
     private Integer quantity;
     @PositiveOrZero
     private Integer minimumQuantity;
+    @Transient
+    private String status;
+
 
     public Product() {
     }
@@ -91,5 +91,13 @@ public class Product {
 
     public void setMinimumQuantity(Integer minimumQuantity) {
         this.minimumQuantity = minimumQuantity;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

@@ -2,6 +2,7 @@ package com.example.smartdispensa.controller;
 
 import com.example.smartdispensa.model.Product;
 import com.example.smartdispensa.repository.ProductRepository;
+import com.example.smartdispensa.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +16,11 @@ import java.util.List;
 public class ProductController {
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private ProductService productService;
     @GetMapping
     public List<Product> listAll(){
-        return productRepository.findAll();
+        return productService.findAllProducts();
     }
     @PostMapping
     public Product save(@RequestBody @Valid Product product){
