@@ -29,13 +29,15 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, String brand, LocalDate expirationDate, String category, Integer quantity) {
+    public Product(String name, String brand, LocalDate expirationDate, String category, Integer quantity, Integer minimumQuantity) {
         this.name = name;
         this.brand = brand;
         this.expirationDate = expirationDate;
         this.category = category;
         this.quantity = quantity;
+        this.minimumQuantity = minimumQuantity;
     }
+
 
     public Long getId() {
         return id;
