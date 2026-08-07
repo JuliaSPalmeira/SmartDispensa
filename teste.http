@@ -1,0 +1,66 @@
+# ==========================================
+# SMARTDISPENSA - TESTES DAS ROTAS DA API
+# ==========================================
+
+@URL = http://localhost:8080
+
+### 1. Criar um novo item na dispensa (POST - 201 Created)
+POST {{URL}}/itens
+Content-Type: application/json
+
+{
+  "nome": "Arroz Integral",
+  "quantidade": 2,
+  "categoria": "Alimentos",
+  "validade": "2026-12-31"
+}
+
+###
+
+### 2. Listar todos os itens da dispensa (GET - 200 OK)
+GET {{URL}}/itens
+Accept: application/json
+
+###
+
+### 3. Buscar um item específico por ID (GET - 200 OK)
+GET {{URL}}/itens/1
+Accept: application/json
+
+###
+
+### 4. Atualizar os dados de um item existente (PUT - 200 OK)
+PUT {{URL}}/itens/1
+Content-Type: application/json
+
+{
+  "nome": "Arroz Integral Camil",
+  "quantidade": 5,
+  "categoria": "Alimentos",
+  "validade": "2026-12-31"
+}
+
+###
+
+### 5. Deletar um item da dispensa (DELETE - 204 No Content)
+DELETE {{URL}}/itens/1
+
+###
+
+# ==========================================
+# CENÁRIOS DE ERRO (EXCEPTION HANDLER)
+# ==========================================
+
+### 6. Testar Erro 404 - Buscar ID inexistente (GET - 404 Not Found)
+GET {{URL}}/itens/999
+Accept: application/json
+
+###
+
+### 7. Testar Erro 400 - Validação sem campos obrigatórios (POST - 400 Bad Request)
+POST {{URL}}/itens
+Content-Type: application/json
+
+{
+  "quantidade": -5
+}

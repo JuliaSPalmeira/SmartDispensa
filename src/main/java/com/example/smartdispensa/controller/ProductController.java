@@ -1,5 +1,6 @@
 package com.example.smartdispensa.controller;
 import com.example.smartdispensa.dto.ProductResponseDTO;
+import com.example.smartdispensa.exception.ResourceNotFoundException;
 import com.example.smartdispensa.model.Product;
 import com.example.smartdispensa.service.ProductService;
 import jakarta.validation.Valid;
@@ -35,30 +36,31 @@ public class ProductController {
     }
         @GetMapping("/{id}")
     public ResponseEntity<ProductResponseDTO> findById(@PathVariable Long id) {
-        return productService.findProductById(id)
-                .map(product -> ResponseEntity.ok(new ProductResponseDTO(product)))
-                .orElse(ResponseEntity.notFound().build());
+            com.example.smartdispensa.model.Product product = productService.findProductById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Produto com o ID " + id + " não foi encontrado na dispensa."));
+            return ResponseEntity.ok(new ProductResponseDTO(product));
     }
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponseDTO> update(@PathVariable Long id, @RequestBody @Valid ProductRequestDTO requestDTO) {
-        return productService.findProductById(id).map(currentProduct -> {
-            currentProduct.setName(requestDTO.name());
-            currentProduct.setBrand(requestDTO.brand());
-            currentProduct.setExpirationDate(requestDTO.expirationDate());
-            currentProduct.setCategory(requestDTO.category());
-            currentProduct.setQuantity(requestDTO.quantity());
-            currentProduct.setMinimumQuantity(requestDTO.minimumQuantity());
+        Product currentProduct = productService.findProductById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Impossível atualizar. Produto com o ID " + id + " não existe."));
+        currentProduct.setName(requestDTO.name());
+        currentProduct.setBrand(requestDTO.brand());
+        currentProduct.setExpirationDate(requestDTO.expirationDate());
+        currentProduct.setCategory(requestDTO.category());
+        currentProduct.setQuantity(requestDTO.quantity());
+        currentProduct.setMinimumQuantity(requestDTO.minimumQuantity());
 
-            Product updatedProduct = productService.updateProduct(currentProduct);
-            return ResponseEntity.ok(new ProductResponseDTO(updatedProduct));
-        }).orElse(ResponseEntity.notFound().build());
+        Product updatedProduct = productService.updateProduct(currentProduct);
+        return ResponseEntity.ok(new ProductResponseDTO(updatedProduct));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
-        return productService.findProductById(id).map(product -> {
-            productService.deleteProduct(product);
-            return ResponseEntity.noContent().<Void>build();
-        }).orElse(ResponseEntity.notFound().build());
+        Product product = productService.findProductById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Impossível deletar. Produto com o ID " + id + " não existe."));
+
+        productService.deleteProduct(product);
+        return ResponseEntity.noContent().build();
     }
     @GetMapping("/alerts/low-stock")
     public ResponseEntity<List<ProductResponseDTO>> listLowStock(@RequestParam Integer limit) {

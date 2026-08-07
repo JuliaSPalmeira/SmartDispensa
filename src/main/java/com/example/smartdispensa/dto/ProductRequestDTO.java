@@ -1,4 +1,5 @@
 package com.example.smartdispensa.dto;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.validation.constraints.*;
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ public class ProductRequestDTO {
 
     @NotNull(message = "A data de validade é obrigatória")
     @FutureOrPresent(message = "A data de validade não pode ser no passado")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate expirationDate;
 
     @NotBlank(message = "A categoria é obrigatória")

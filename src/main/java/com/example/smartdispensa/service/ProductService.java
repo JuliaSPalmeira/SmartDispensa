@@ -38,11 +38,11 @@ public class ProductService {
         productRepository.delete(product);
     }
     public List<Product> listLowStock(Integer limit) {
-        List<Product> products = productRepository.findByQuantityLessThanEqual(limit);
+        List<Product> products = productRepository.findLowStockProducts();
         for (Product product : products) {
             calculateStatus(product);
         }
-        return products;
+        return products.stream().limit(limit).toList();
     }
 
     public List<Product> listExpirationAlerts(LocalDate cutoffDate) {
@@ -50,6 +50,7 @@ public class ProductService {
         for (Product product : products) {
             calculateStatus(product);
         }
+
         return products;
     }
 
